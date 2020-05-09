@@ -1120,7 +1120,12 @@ const Component = () => (
     ].join('\n'),
     options: [2],
     errors: [{message: 'Expected indentation of 2 space characters but found 4.'}]
-  }, {
+  }, /*
+  // The detection logic only thinks <App> is indented wrong, not the other
+  // two lines following. I *think* because it incorrectly uses <App>'s indention
+  // as the baseline for the next two, instead of the realizing the entire three
+  // lines are wrong together. See #608
+      {
     code: [
       'function App() {',
       '  return (',
@@ -1130,22 +1135,9 @@ const Component = () => (
       '  );',
       '}'
     ].join('\n'),
-    // The detection logic only thinks <App> is indented wrong, not the other
-    // two lines following. I *think* because it incorrectly uses <App>'s indention
-    // as the baseline for the next two, instead of the realizing the entire three
-    // lines are wrong together. See #608
-    /* output: [
-      'function App() {',
-      '  return (',
-      '    <App>',
-      '      <Foo />',
-      '    </App>',
-      '  );',
-      '}'
-    ].join('\n'), */
     options: [2],
     errors: [{message: 'Expected indentation of 4 space characters but found 0.'}]
-  }, {
+  }, */ {
     code: [
       '<App>',
       '   {test}',
@@ -1781,7 +1773,14 @@ const Component = () => (
     ].join('\n'),
     errors: [
       {message: 'Expected indentation of 4 space characters but found 2.'}
-    ]
+    ],
+    output: [
+      '<p>',
+      '    <div>',
+      '        <SelfClosingTag />Text',
+      '    </div>',
+      '</p>'
+    ].join('\n')
   }, {
     code: `
     const Component = () => (

@@ -572,6 +572,19 @@ ruleTester.run('forbid-prop-types', rule, {
       '  preview: PropTypes.bool,',
       '}, componentApi, teaserListProps);'
     ].join('\n')
+  }, {
+    code: [
+      'var First = createReactClass({',
+      '  propTypes: {',
+      '    s: PropTypes.shape({',
+      '      o: PropTypes.object',
+      '    })',
+      '  },',
+      '  render: function() {',
+      '    return <div />;',
+      '  }',
+      '});'
+    ].join('\n')
   }],
 
   invalid: [{
@@ -709,20 +722,6 @@ ruleTester.run('forbid-prop-types', rule, {
       '});'
     ].join('\n'),
     errors: 2
-  }, {
-    code: [
-      'var First = createReactClass({',
-      '  propTypes: {',
-      '    s: PropTypes.shape({,',
-      '      o: PropTypes.object',
-      '    })',
-      '  },',
-      '  render: function() {',
-      '    return <div />;',
-      '  }',
-      '});'
-    ].join('\n'),
-    errors: 1
   }, {
     code: [
       'var First = createReactClass({',
